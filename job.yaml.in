@@ -44,7 +44,7 @@ working_dir: .
 cloud: anyscale_v2_default_cloud
 
 env_vars:
-  # RAY_centralized_actor_scheduling: "true"
+  RAY_centralized_actor_scheduling: "true"
   # RAY_BACKEND_LOG_LEVEL: "debug"
   ANYSCALE_DISABLE_OPTIMIZED_RAY: "true"
 
