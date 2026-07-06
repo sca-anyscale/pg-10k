@@ -58,7 +58,9 @@ def measure(num_pgs, bundles_per_pg, pg_kwargs, cpu_per_node):
     start = time.time()
     pgs = [placement_group(**pg_kwargs) for _ in range(num_pgs)]
     ray.get([pg.ready() for pg in pgs])
-    pg_create_throughput = num_pgs / (time.time() - start)
+    etime = time.time()
+    pg_time = etime - start
+    pg_create_throughput = num_pgs / (etime - start)
 
     start = time.time()
     actors = [
@@ -69,7 +71,9 @@ def measure(num_pgs, bundles_per_pg, pg_kwargs, cpu_per_node):
         for _ in range(bundles_per_pg * args.actors_per_node)
     ]
     ray.get([a.ping.remote() for a in actors])
-    actor_throughput = len(actors) / (time.time() - start)
+    etime = time.time()
+    actor_time = etime - start
+    actor_throughput = len(actors) / (etime - start)
 
     result = {
         "mode": args.mode,
@@ -77,7 +81,9 @@ def measure(num_pgs, bundles_per_pg, pg_kwargs, cpu_per_node):
         "bundles_per_pg": bundles_per_pg,
         "num_actors": len(actors),
         "pg_create_throughput": pg_create_throughput,
+        "pg_create_time": pg_time,
         "actor_throughput": actor_throughput,
+        "actor_create_time": actor_time,
     }
     for pg in pgs:
         remove_placement_group(pg)
