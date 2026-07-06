@@ -1,0 +1,8 @@
+{% for k in range(racks) %}  - name: rack-{{k}}
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-{{k}}
+{% endfor %}

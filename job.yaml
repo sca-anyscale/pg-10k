@@ -1,0 +1,834 @@
+# View the docs https://docs.anyscale.com/reference/job-api#jobconfig.
+name: prasad-image-classification-m5n-g6.4xlarge-20260225-3
+
+# When empty, use the default image. This can be an Anyscale-provided base image
+# like anyscale/ray:2.43.0-slim-py312-cu125, a user-provided base image (provided
+# that it meets certain specs), or you can build new images using the Anyscale
+# image builder at https://console.anyscale-staging.com/v2/container-images.
+# image_uri:  # anyscale/ray:2.43.0-slim-py312-cu125
+image_uri: anyscale/ray:2.56.0-slim-py310-cu129
+#image_uri: 830883877497.dkr.ecr.us-west-2.amazonaws.com/anyscale/ray:2.56.0-py310-cu129
+#containerfile: ./Dockerfile
+
+compute_config:
+  head_node:
+    instance_type: m5.16xlarge
+    resources:
+      CPU: 0
+      GPU: 0
+    flags: {}
+  worker_nodes:
+  - name: rack-0
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-0
+  - name: rack-1
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-1
+  - name: rack-2
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-2
+  - name: rack-3
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-3
+  - name: rack-4
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-4
+  - name: rack-5
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-5
+  - name: rack-6
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-6
+  - name: rack-7
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-7
+  - name: rack-8
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-8
+  - name: rack-9
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-9
+  - name: rack-10
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-10
+  - name: rack-11
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-11
+  - name: rack-12
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-12
+  - name: rack-13
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-13
+  - name: rack-14
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-14
+  - name: rack-15
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-15
+  - name: rack-16
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-16
+  - name: rack-17
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-17
+  - name: rack-18
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-18
+  - name: rack-19
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-19
+  - name: rack-20
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-20
+  - name: rack-21
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-21
+  - name: rack-22
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-22
+  - name: rack-23
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-23
+  - name: rack-24
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-24
+  - name: rack-25
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-25
+  - name: rack-26
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-26
+  - name: rack-27
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-27
+  - name: rack-28
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-28
+  - name: rack-29
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-29
+  - name: rack-30
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-30
+  - name: rack-31
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-31
+  - name: rack-32
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-32
+  - name: rack-33
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-33
+  - name: rack-34
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-34
+  - name: rack-35
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-35
+  - name: rack-36
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-36
+  - name: rack-37
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-37
+  - name: rack-38
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-38
+  - name: rack-39
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-39
+  - name: rack-40
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-40
+  - name: rack-41
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-41
+  - name: rack-42
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-42
+  - name: rack-43
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-43
+  - name: rack-44
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-44
+  - name: rack-45
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-45
+  - name: rack-46
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-46
+  - name: rack-47
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-47
+  - name: rack-48
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-48
+  - name: rack-49
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-49
+  - name: rack-50
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-50
+  - name: rack-51
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-51
+  - name: rack-52
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-52
+  - name: rack-53
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-53
+  - name: rack-54
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-54
+  - name: rack-55
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-55
+  - name: rack-56
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-56
+  - name: rack-57
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-57
+  - name: rack-58
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-58
+  - name: rack-59
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-59
+  - name: rack-60
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-60
+  - name: rack-61
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-61
+  - name: rack-62
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-62
+  - name: rack-63
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-63
+  - name: rack-64
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-64
+  - name: rack-65
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-65
+  - name: rack-66
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-66
+  - name: rack-67
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-67
+  - name: rack-68
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-68
+  - name: rack-69
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-69
+  - name: rack-70
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-70
+  - name: rack-71
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-71
+  - name: rack-72
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-72
+  - name: rack-73
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-73
+  - name: rack-74
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-74
+  - name: rack-75
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-75
+  - name: rack-76
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-76
+  - name: rack-77
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-77
+  - name: rack-78
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-78
+  - name: rack-79
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-79
+  - name: rack-80
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-80
+  - name: rack-81
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-81
+  - name: rack-82
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-82
+  - name: rack-83
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-83
+  - name: rack-84
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-84
+  - name: rack-85
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-85
+  - name: rack-86
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-86
+  - name: rack-87
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-87
+  - name: rack-88
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-88
+  - name: rack-89
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-89
+  - name: rack-90
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-90
+  - name: rack-91
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-91
+  - name: rack-92
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-92
+  - name: rack-93
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-93
+  - name: rack-94
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-94
+  - name: rack-95
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-95
+  - name: rack-96
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-96
+  - name: rack-97
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-97
+  - name: rack-98
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-98
+  - name: rack-99
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-99
+  - name: rack-100
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-100
+  - name: rack-101
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-101
+  - name: rack-102
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-102
+  - name: rack-103
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-103
+  - name: rack-104
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-104
+  - name: rack-105
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-105
+  - name: rack-106
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-106
+  - name: rack-107
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-107
+  - name: rack-108
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-108
+  - name: rack-109
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-109
+  - name: rack-110
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-110
+
+  enable_cross_zone_scaling: false
+
+requirements:
+  # - daft==0.6.2
+  # - torch==2.7.0
+  # - torchvision==0.22.0
+  # - numpy==1.26.4
+
+ 
+# Path to a local directory or a remote URI to a .zip file (S3, GS, HTTP) that
+# will be the working directory for the job. The files in the directory will be
+# automatically uploaded to the job environment in Anyscale.
+working_dir: .
+
+# When empty, this uses the default Anyscale Cloud in your organization.
+cloud: anyscale_v2_default_cloud
+
+env_vars:
+  RAY_BACKEND_LOG_LEVEL: "debug"
+  ANYSCALE_DISABLE_OPTIMIZED_RAY: "true"
+
+# The script to run in your job. You can also do "uv run main.py" if you have a
+# pyproject.toml file in your working_dir.
+#entrypoint: python ray_data_main.py
+# entrypoint: python ray_data_main_network_monitor.py
+entrypoint: bash -x ./RUNIT
+
+# If there is an error, do not retry.
+max_retries: 0
+
+# Kill the job after 2 hours to control costs.
+timeout_s: 28800
+#flags:
+#  disable_nfs_mount: true
+#  allow-cross-zone-autoscaling: true
+#  enable_multi_az_serve: true

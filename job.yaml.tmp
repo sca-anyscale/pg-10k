@@ -1,0 +1,74 @@
+# View the docs https://docs.anyscale.com/reference/job-api#jobconfig.
+name: sca-pg-stress-20260701-a07cadd8
+
+# When empty, use the default image. This can be an Anyscale-provided base image
+# like anyscale/ray:2.43.0-slim-py312-cu125, a user-provided base image (provided
+# that it meets certain specs), or you can build new images using the Anyscale
+# image builder at https://console.anyscale-staging.com/v2/container-images.
+# image_uri:  # anyscale/ray:2.43.0-slim-py312-cu125
+#image_uri: anyscale/ray:2.53.0-slim-py312-cu129
+#image_uri: 830883877497.dkr.ecr.us-west-2.amazonaws.com/anyscale/ray:prasad_rt
+#image_uri: 830883877497.dkr.ecr.us-west-2.amazonaws.com/anyscale/ray:sca-oss-perf-bl-4
+#image_uri: anyscale/ray:2.54.1-slim-py312-cu129
+#image_uri: 830883877497.dkr.ecr.us-west-2.amazonaws.com/anyscale/ray:sca-4076-13
+image_uri: 830883877497.dkr.ecr.us-west-2.amazonaws.com/anyscale/ray:devajya-fix
+#containerfile: ./Dockerfile
+
+compute_config:
+  head_node:
+    instance_type: m5.4xlarge
+    resources:
+      CPU: 0
+      GPU: 0
+    flags: {}
+  worker_nodes:
+    - name: "cpu_node"
+      instance_type: m5.4xlarge
+      flags: {}
+      min_nodes: 2
+      max_nodes: 2
+      market_type: ON_DEMAND
+    - name: "fake_gpu_node"
+      instance_type: m5.4xlarge
+      resources:
+        CPU: 16
+        GPU: 1
+      flags: {}
+      min_nodes: 2
+      max_nodes: 2
+      market_type: ON_DEMAND
+  enable_cross_zone_scaling: false
+
+requirements:
+  # - daft==0.6.2
+  # - torch==2.7.0
+  # - torchvision==0.22.0
+  # - numpy==1.26.4
+
+ 
+# Path to a local directory or a remote URI to a .zip file (S3, GS, HTTP) that
+# will be the working directory for the job. The files in the directory will be
+# automatically uploaded to the job environment in Anyscale.
+working_dir: .
+
+# When empty, this uses the default Anyscale Cloud in your organization.
+cloud: anyscale_v2_default_cloud
+
+env_vars:
+  RAY_BACKEND_LOG_LEVEL: "debug"
+  ANYSCALE_DISABLE_OPTIMIZED_RAY: "true"
+
+# The script to run in your job. You can also do "uv run main.py" if you have a
+# pyproject.toml file in your working_dir.
+#entrypoint: python ray_data_main.py
+# entrypoint: python ray_data_main_network_monitor.py
+entrypoint: bash -x ./RUNIT
+
+# If there is an error, do not retry.
+max_retries: 0
+
+# Kill the job after 2 hours to control costs.
+timeout_s: 28800
+#flags:
+#  allow-cross-zone-autoscaling: true
+#  enable_multi_az_serve: true

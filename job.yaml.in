@@ -1,0 +1,64 @@
+# View the docs https://docs.anyscale.com/reference/job-api#jobconfig.
+name: prasad-image-classification-m5n-g6.4xlarge-20260225-3
+
+# When empty, use the default image. This can be an Anyscale-provided base image
+# like anyscale/ray:2.43.0-slim-py312-cu125, a user-provided base image (provided
+# that it meets certain specs), or you can build new images using the Anyscale
+# image builder at https://console.anyscale-staging.com/v2/container-images.
+# image_uri:  # anyscale/ray:2.43.0-slim-py312-cu125
+image_uri: anyscale/ray:2.56.0-slim-py310-cu129
+#image_uri: 830883877497.dkr.ecr.us-west-2.amazonaws.com/anyscale/ray:2.56.0-py310-cu129
+#containerfile: ./Dockerfile
+
+compute_config:
+  head_node:
+    instance_type: m5.16xlarge
+    resources:
+      CPU: 0
+      GPU: 0
+    flags: {}
+  worker_nodes:
+{% for k in range(racks) %}  - name: rack-{{k}}
+    instance_type: m6i.large
+    min_nodes: 18
+    max_nodes: 18
+    market_type: ON_DEMAND
+    labels:
+      ray.io/gpu-domain: rack-{{k}}
+{% endfor %}
+  enable_cross_zone_scaling: false
+
+requirements:
+  # - daft==0.6.2
+  # - torch==2.7.0
+  # - torchvision==0.22.0
+  # - numpy==1.26.4
+
+ 
+# Path to a local directory or a remote URI to a .zip file (S3, GS, HTTP) that
+# will be the working directory for the job. The files in the directory will be
+# automatically uploaded to the job environment in Anyscale.
+working_dir: .
+
+# When empty, this uses the default Anyscale Cloud in your organization.
+cloud: anyscale_v2_default_cloud
+
+env_vars:
+  RAY_BACKEND_LOG_LEVEL: "debug"
+  ANYSCALE_DISABLE_OPTIMIZED_RAY: "true"
+
+# The script to run in your job. You can also do "uv run main.py" if you have a
+# pyproject.toml file in your working_dir.
+#entrypoint: python ray_data_main.py
+# entrypoint: python ray_data_main_network_monitor.py
+entrypoint: bash -x ./RUNIT
+
+# If there is an error, do not retry.
+max_retries: 0
+
+# Kill the job after 2 hours to control costs.
+timeout_s: 28800
+#flags:
+#  disable_nfs_mount: true
+#  allow-cross-zone-autoscaling: true
+#  enable_multi_az_serve: true
