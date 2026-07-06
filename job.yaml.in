@@ -19,7 +19,7 @@ compute_config:
     flags: {}
   worker_nodes:
 {% for k in range(racks) %}  - name: rack-{{k}}
-    instance_type: m6i.large
+    instance_type: m5.xlarge
     min_nodes: 18
     max_nodes: 18
     market_type: ON_DEMAND
@@ -44,7 +44,7 @@ working_dir: .
 cloud: anyscale_v2_default_cloud
 
 env_vars:
-  RAY_BACKEND_LOG_LEVEL: "debug"
+  # RAY_BACKEND_LOG_LEVEL: "debug"
   ANYSCALE_DISABLE_OPTIMIZED_RAY: "true"
 
 # The script to run in your job. You can also do "uv run main.py" if you have a
