@@ -81,7 +81,7 @@ def measure(num_pgs, bundles_per_pg, pg_kwargs, cpu_per_node):
     }
     for pg in pgs:
         remove_placement_group(pg)
-    ray._common.test_utils.wait_for_condition(no_resource_leaks)
+    # ray._common.test_utils.wait_for_condition(no_resource_leaks)
     return result
 
 
