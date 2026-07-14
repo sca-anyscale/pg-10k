@@ -8,6 +8,7 @@ def main():
     parser = argparse.ArgumentParser(description='generate rack labels')
     parser.add_argument('-d', '--debug', action='store_true')
     parser.add_argument('-n', '--nodes-per-rack', type=int, default=18)
+    parser.add_argument('-p', '--profile', action='store_true')
     parser.add_argument('-r', '--num-racks', type=int, default=111)
 
     args = parser.parse_args()
@@ -22,6 +23,9 @@ def main():
         'nodes_per_rack': args.nodes_per_rack,
         'total_nodes': args.num_racks * args.nodes_per_rack,
     }
+    if args.profile:
+        props['profile'] = '--profile'
+
     output = template.render(props)
 
     with open('job.yaml', 'w', encoding='utf-8') as ofile:
