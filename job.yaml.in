@@ -20,8 +20,8 @@ compute_config:
   worker_nodes:
 {% for k in range(racks) %}  - name: rack-{{k}}
     instance_type: m5.xlarge
-    min_nodes: 18
-    max_nodes: 18
+    min_nodes: {{nodes_per_rack}}
+    max_nodes: {{nodes_per_rack}}
     market_type: ON_DEMAND
     labels:
       ray.io/gpu-domain: rack-{{k}}
