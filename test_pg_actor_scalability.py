@@ -7,6 +7,7 @@ pg-per-node: one single-bundle PG per worker node.
 pg-per-rack: one PG per rack, one bundle per node in the rack.
 """
 import argparse
+import os
 import time
 
 from many_nodes_tests.dashboard_test import DashboardTestAtScale
@@ -24,6 +25,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--mode", choices=["pg-per-node", "pg-per-rack"], required=True)
 parser.add_argument("--node-counts", nargs="+", type=int, default=[])
 parser.add_argument("--actors-per-node", type=int, default=4)
+parser.add_argument("--profile", action='store_true')
 args, _ = parser.parse_known_args()
 
 
@@ -119,9 +121,26 @@ def run_benchmark():
 
 addr = ray.init(address="auto")
 
+outdir = os.environ.get("PROFILING_STORAGE_DIR", "/mnt/shared_storage")
+if args.profile:
+    from profiling.coordinator import Profiling
+    job_id = os.environ.get("ANYSCALE_JOB_ID", "unknown")
+    if job_id == 'unknown':
+        job_id = os.environ.get("ANYSCALE_WORKSPACE_ID", "unknown")
+
+    profiling = Profiling(
+        outdir=f"{outdir}/{BENCHMARK}/{job_id}",
+        num_gpu_nodes=0,
+    )
+
+    profiling.start()
+
 dashboard_test = DashboardTestAtScale(addr)
 
 results = run_benchmark()
+
+if args.profile:
+    profiling.stop(storage_prefix=f"{BENCHMARK}/{job_id}")
 
 print(f"Result: {results}")
 perf_metrics = []
