@@ -26,7 +26,7 @@ compute_config:
     labels:
       ray.io/gpu-domain: rack-{{k}}
 {% endfor %}
-  enable_cross_zone_scaling: false
+  enable_cross_zone_scaling: true
 
 requirements:
   # - daft==0.6.2
