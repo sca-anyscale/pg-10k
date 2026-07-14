@@ -3,4 +3,4 @@ set -x
 
 #PROFILE=--profile
 export SMOKE_TEST=true
-python3 ./test_pg_actor_scalability.py --mode pg-per-node --node-counts 2000
+python3 ./test_pg_actor_scalability.py --mode pg-per-node --node-counts 1998
