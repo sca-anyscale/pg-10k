@@ -20,6 +20,7 @@ from ray.util.placement_group import placement_group, remove_placement_group
 from ray.util.scheduling_strategies import PlacementGroupSchedulingStrategy
 
 RACK_LABEL = "ray.io/gpu-domain"
+BENCHMARK = 'sca-pg-scale'
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--mode", choices=["pg-per-node", "pg-per-rack"], required=True)
