@@ -48,6 +48,13 @@ env_vars:
   # RAY_BACKEND_LOG_LEVEL: "debug"
   ANYSCALE_DISABLE_OPTIMIZED_RAY: "true"
   ANYSCALE_DISABLE_GITIGNORE_EXCLUSION: "1"
+  PROFILER_MODE: "none"          # "nsys", "torch", or "none"
+  PYSPY_ENABLED: "0"             # Enable py-spy CPU profiling
+  PERF_PROFILING_ENABLED: "1"    # Enable perf record on raylet/gcs
+  PERF_NUM_CPU_WORKERS: "5"
+  PERF_NUM_GPU_WORKERS: "0"
+  PROFILING_STORAGE_DIR: "/mnt/shared_storage"
+  PROFILING_STORAGE_TYPE: "s3"   # S3 or GCs at present
 
 # The script to run in your job. You can also do "uv run main.py" if you have a
 # pyproject.toml file in your working_dir.
