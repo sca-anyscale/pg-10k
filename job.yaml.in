@@ -7,7 +7,7 @@ name: prasad-image-classification-m5n-g6.4xlarge-20260225-3
 # image builder at https://console.anyscale-staging.com/v2/container-images.
 # image_uri:  # anyscale/ray:2.43.0-slim-py312-cu125
 # image_uri: anyscale/ray:2.56.0-slim-py310-cu129
-image_uri: 830883877497.dkr.ecr.us-west-2.amazonaws.com/anyscale/ray:sca-scale-38
+image_uri: 830883877497.dkr.ecr.us-west-2.amazonaws.com/anyscale/ray:sca-scale-40
 #containerfile: ./Dockerfile
 
 compute_config:
