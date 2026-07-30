@@ -1,0 +1,156 @@
+#!/usr/bin/env python3
+"""Times placement group creation and actor-into-PG scheduling throughput, at scale.
+
+Each bundle is a whole worker node; actors-per-node actors are scheduled into each.
+
+pg-per-node: one single-bundle PG per worker node.
+
+pg-per-rack: one PG per rack, one bundle per node in the rack.
+"""
+import argparse
+import os
+import time
+
+#from many_nodes_tests.dashboard_test import DashboardTestAtScale
+
+import ray
+import ray._common.test_utils
+import ray._private.test_utils as test_utils
+import ray.autoscaler.sdk
+from ray.util.placement_group import placement_group, remove_placement_group
+from ray.util.scheduling_strategies import PlacementGroupSchedulingStrategy
+
+RACK_LABEL = "ray.io/gpu-domain"
+BENCHMARK = 'sca-pg-scale'
+
+parser = argparse.ArgumentParser()
+#parser.add_argument("--mode", choices=["pg-per-node", "pg-per-rack"], required=True)
+parser.add_argument("--node-counts", nargs="+", type=int, default=[])
+parser.add_argument("--pgs-per-node", type=int, default=4)
+parser.add_argument("--profile", action='store_true')
+args, _ = parser.parse_known_args()
+
+
+def no_resource_leaks():
+    return test_utils.no_resource_leaks_excluding_node_resources()
+
+
+def worker_nodes():
+    head_node_id = ray.get_runtime_context().get_node_id()
+    nodes = [n for n in ray.nodes() if n["Alive"] and n["NodeID"] != head_node_id]
+    return nodes or [n for n in ray.nodes() if n["Alive"]]
+
+
+def total_cluster_cpus():
+    return int(sum(n["Resources"].get("CPU", 0) for n in ray.nodes() if n["Alive"]))
+
+
+def scale_up_to(num_nodes, cpu_per_node):
+    head_cpus = total_cluster_cpus() - len(worker_nodes()) * cpu_per_node
+    ray.autoscaler.sdk.request_resources(num_cpus=head_cpus + num_nodes * cpu_per_node)
+    while len(worker_nodes()) < num_nodes:
+        print(f"Waiting for {len(worker_nodes())}/{num_nodes} worker nodes")
+        time.sleep(5)
+
+
+def measure(num_pgs, bundles_per_pg, pg_kwargs, cpu_per_node):
+    print(num_pgs, bundles_per_pg, pg_kwargs, cpu_per_node)
+    @ray.remote(num_cpus=cpu_per_node / args.bundles_per_node)
+    class Actor:
+        def ping(self):
+            return "pong"
+
+    start = time.time()
+    pgs = [placement_group(**pg_kwargs) for _ in range(num_pgs)]
+    ray.get([pg.ready() for pg in pgs])
+    etime = time.time()
+    pg_time = etime - start
+    pg_create_throughput = num_pgs / (etime - start)
+
+    #start = time.time()
+    #actors = [
+    #    Actor.options(
+    #        scheduling_strategy=PlacementGroupSchedulingStrategy(placement_group=pg)
+    #    ).remote()
+    #    for pg in pgs
+    #    for _ in range(bundles_per_pg * args.actors_per_node)
+    #]
+    #ray.get([a.ping.remote() for a in actors])
+    #etime = time.time()
+    #actor_time = etime - start
+    #actor_throughput = len(actors) / (etime - start)
+
+    result = {
+        #"mode": args.mode,
+        "num_pgs": num_pgs,
+        "bundles_per_pg": bundles_per_pg,
+        # "num_actors": len(actors),
+        "pg_create_throughput": pg_create_throughput,
+        "pg_create_time": pg_time,
+        #"actor_throughput": actor_throughput,
+        #"actor_create_time": actor_time,
+    }
+    for pg in pgs:
+        remove_placement_group(pg)
+    # ray._common.test_utils.wait_for_condition(no_resource_leaks)
+    return result
+
+
+def run_benchmark():
+    cpu_per_node = int(worker_nodes()[0]["Resources"]["CPU"])
+    bundles = [{"CPU": 0.01}] * cpu_per_node # * args.pgs_per_node
+    pgs = len(worker_nodes()) # * args.pgs_per_node
+    results = {}
+
+    print('AAA', pgs, len(bundles), cpu_per_node)
+    results[f"test"] = measure(
+        pgs, len(bundles), dict(bundles=bundles), cpu_per_node
+    )
+    return results
+
+
+addr = ray.init(address="auto")
+
+outdir = os.environ.get("PROFILING_STORAGE_DIR", "/mnt/shared_storage")
+if args.profile:
+    from profiling.coordinator import Profiling
+    job_id = os.environ.get("ANYSCALE_JOB_ID", "unknown")
+    if job_id == 'unknown':
+        job_id = os.environ.get("ANYSCALE_WORKSPACE_ID", "unknown")
+
+    profiling = Profiling(
+        outdir=f"{outdir}/{BENCHMARK}/{job_id}",
+        num_gpu_nodes=0,
+    )
+
+    profiling.start()
+
+#dashboard_test = DashboardTestAtScale(addr)
+
+results = run_benchmark()
+
+if args.profile:
+    profiling.stop(storage_prefix=f"{BENCHMARK}/{job_id}")
+
+print(f"Result: {results}")
+perf_metrics = []
+for name, r in results.items():
+    perf_metrics.append(
+        {
+            "perf_metric_name": f"{name}_pg_create_throughput",
+            "perf_metric_value": r["pg_create_throughput"],
+            "perf_metric_type": "THROUGHPUT",
+        }
+    )
+    '''
+    perf_metrics.append(
+        {
+            "perf_metric_name": f"{name}_actor_throughput",
+            "perf_metric_value": r["actor_throughput"],
+            "perf_metric_type": "THROUGHPUT",
+        }
+    )
+    '''
+results["perf_metrics"] = perf_metrics
+#dashboard_test.update_release_test_result(results)
+#test_utils.safe_write_to_results_json(results)
