@@ -55,7 +55,7 @@ def scale_up_to(num_nodes, cpu_per_node):
 
 def measure(num_pgs, bundles_per_pg, pg_kwargs, cpu_per_node):
     print(num_pgs, bundles_per_pg, pg_kwargs, cpu_per_node)
-    @ray.remote(num_cpus=cpu_per_node / args.bundles_per_node)
+    @ray.remote(num_cpus=cpu_per_node / args.pgs_per_node)
     class Actor:
         def ping(self):
             return "pong"
