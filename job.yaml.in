@@ -7,7 +7,7 @@ name: prasad-image-classification-m5n-g6.4xlarge-20260225-3
 # image builder at https://console.anyscale-staging.com/v2/container-images.
 # image_uri:  # anyscale/ray:2.43.0-slim-py312-cu125
 # image_uri: anyscale/ray:2.56.0-slim-py310-cu129
-image_uri: 830883877497.dkr.ecr.us-west-2.amazonaws.com/anyscale/ray:sca-scale-40
+image_uri: 830883877497.dkr.ecr.us-west-2.amazonaws.com/anyscale/ray:sca-scale-42
 #containerfile: ./Dockerfile
 
 compute_config:
@@ -19,7 +19,7 @@ compute_config:
     flags: {}
   worker_nodes:
 {% for k in range(racks) %}  - name: rack-{{k}}
-    instance_type: m5.xlarge
+    instance_type: m7i.large
     min_nodes: {{nodes_per_rack}}
     max_nodes: {{nodes_per_rack}}
     market_type: ON_DEMAND
@@ -44,7 +44,7 @@ working_dir: .
 cloud: anyscale_v2_default_cloud
 
 env_vars:
-  # RAY_centralized_actor_scheduling: "true"
+  RAY_centralized_actor_scheduling: "true"
   # RAY_BACKEND_LOG_LEVEL: "debug"
   ANYSCALE_DISABLE_OPTIMIZED_RAY: "true"
   ANYSCALE_DISABLE_GITIGNORE_EXCLUSION: "1"
