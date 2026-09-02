@@ -20,15 +20,81 @@ compute_config:
       GPU: 0
     flags: {}
   worker_nodes:
-{% for k in range(racks) %}  - name: rack-{{k}}
-    instance_type: m7i.large
-    min_nodes: {{nodes_per_rack}}
-    max_nodes: {{nodes_per_rack}}
-    market_type: ON_DEMAND
-    labels:
-      ray.io/gpu-domain: rack-{{k}}
-{% endfor %}
-  enable_cross_zone_scaling: true
+    - instance_type: m5.4xlarge
+      flags: {}
+      min_nodes: 0
+      max_nodes: 833
+      market_type: ON_DEMAND
+    - instance_type: m5a.4xlarge
+      flags: {}
+      min_nodes: 0
+      max_nodes: 833
+      market_type: ON_DEMAND
+    - instance_type: m5d.4xlarge
+      flags: {}
+      min_nodes: 0
+      max_nodes: 833
+      market_type: ON_DEMAND
+    - instance_type: m5n.4xlarge
+      flags: {}
+      min_nodes: 0
+      max_nodes: 833
+      market_type: ON_DEMAND
+    - instance_type: m5ad.4xlarge
+      flags: {}
+      min_nodes: 0
+      max_nodes: 833
+      market_type: ON_DEMAND
+    - instance_type: m6a.4xlarge
+      flags: {}
+      min_nodes: 0
+      max_nodes: 833
+      market_type: ON_DEMAND
+    - instance_type: m6i.4xlarge
+      flags: {}
+      min_nodes: 0
+      max_nodes: 833
+      market_type: ON_DEMAND
+    - instance_type: m6id.4xlarge
+      flags: {}
+      min_nodes: 0
+      max_nodes: 833
+      market_type: ON_DEMAND
+    - instance_type: m6in.4xlarge
+      flags: {}
+      min_nodes: 0
+      max_nodes: 833
+      market_type: ON_DEMAND
+    - instance_type: m7i.4xlarge
+      flags: {}
+      min_nodes: 0
+      max_nodes: 833
+      market_type: ON_DEMAND
+    - instance_type: r5.4xlarge
+      flags: {}
+      min_nodes: 0
+      max_nodes: 833
+      market_type: ON_DEMAND
+    - instance_type: r5a.4xlarge
+      flags: {}
+      min_nodes: 0
+      max_nodes: 833
+      market_type: ON_DEMAND
+    - instance_type: r6i.4xlarge
+      flags: {}
+      min_nodes: 0
+      max_nodes: 833
+      market_type: ON_DEMAND
+    - instance_type: r6a.4xlarge
+      flags: {}
+      min_nodes: 0
+      max_nodes: 833
+      market_type: ON_DEMAND
+    - instance_type: r7i.4xlarge
+      flags: {}
+      min_nodes: 0
+      max_nodes: 833
+      market_type: ON_DEMAND
 
 requirements:
   # - daft==0.6.2
