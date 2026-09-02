@@ -1,5 +1,9 @@
+import os
 import ray
-ray.init()
+
+address = os.environ.get("RAY_ADDRESS", "auto")
+addr = ray.init(address=address)
+
 nodes = ray.nodes()
 alive = [n for n in nodes if n["Alive"]]
 head_ip = ray.get_runtime_context().worker.node_ip_address

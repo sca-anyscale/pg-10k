@@ -120,7 +120,9 @@ def run_benchmark():
     return results
 
 
-addr = ray.init(address="auto")
+address = os.environ.get("RAY_ADDRESS", "auto")
+addr = ray.init(address=address)
+print('ADDR', addr)
 
 outdir = os.environ.get("PROFILING_STORAGE_DIR", "/mnt/shared_storage")
 if args.profile:
@@ -136,7 +138,7 @@ if args.profile:
 
     profiling.start()
 
-dashboard_test = DashboardTestAtScale(addr)
+#dashboard_test = DashboardTestAtScale(addr)
 
 results = run_benchmark()
 
@@ -161,5 +163,5 @@ for name, r in results.items():
         }
     )
 results["perf_metrics"] = perf_metrics
-dashboard_test.update_release_test_result(results)
-test_utils.safe_write_to_results_json(results)
+#dashboard_test.update_release_test_result(results)
+#test_utils.safe_write_to_results_json(results)

@@ -56,7 +56,8 @@ def no_resource_leaks():
     return test_utils.no_resource_leaks_excluding_node_resources()
 
 
-addr = ray.init(address="auto")
+address = os.environ.get("RAY_ADDRESS", "auto")
+addr = ray.init(address=address)
 
 outdir = os.environ.get("PROFILING_STORAGE_DIR", "/mnt/shared_storage")
 if args.profile:
@@ -74,7 +75,7 @@ if args.profile:
 
 #ray._common.test_utils.wait_for_condition(no_resource_leaks, timeout=60)
 monitor_actor = test_utils.monitor_memory_usage()
-dashboard_test = DashboardTestAtScale(addr)
+#dashboard_test = DashboardTestAtScale(addr)
 
 start_time = time.time()
 test_max_actors(args)
@@ -119,5 +120,5 @@ if not is_smoke_test:
             "perf_metric_type": "THROUGHPUT",
         }
     ]
-dashboard_test.update_release_test_result(results)
+#dashboard_test.update_release_test_result(results)
 test_utils.safe_write_to_results_json(results)

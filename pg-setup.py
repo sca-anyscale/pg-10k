@@ -108,8 +108,8 @@ def run_benchmark():
     )
     return results
 
-
-addr = ray.init(address="auto")
+address = os.environ.get("RAY_ADDRESS", "auto")
+addr = ray.init(address=address)
 
 outdir = os.environ.get("PROFILING_STORAGE_DIR", "/mnt/shared_storage")
 if args.profile:
