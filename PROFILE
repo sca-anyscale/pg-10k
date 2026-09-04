@@ -1,0 +1,13 @@
+#!/bin/bash
+usage() {
+	echo "usage: PROFILE <pid> <tag>"
+	exit 1
+}
+
+if [ $# != 2 ]; then
+	usage
+fi
+
+pid=$1
+tag=$2
+sudo perf record -g --call-graph fp -F 99 -p ${pid} -o /tmp/perf_gcs_${tag}.data
