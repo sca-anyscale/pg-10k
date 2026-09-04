@@ -1,3 +1,3 @@
 #!/bin/bash
 python fill_hosts.py --hosts 833 
-launch_second_cluster.py --hosts 833 --raylets-per-host 12
+python launch_second_cluster.py --hosts 833 --raylets-per-host 12
