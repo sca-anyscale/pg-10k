@@ -120,6 +120,7 @@ def run_benchmark():
     return results
 
 
+os.environ['RAY_ADDRESS']
 address = os.environ.get("RAY_ADDRESS", "auto")
 addr = ray.init(address=address)
 print('ADDR', addr)

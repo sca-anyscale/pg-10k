@@ -1,0 +1,2 @@
+export RAY_enable_open_telemetry=false
+export RAY_enable_metrics_collection=false

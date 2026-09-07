@@ -55,7 +55,7 @@ def test_max_actors(args):
 def no_resource_leaks():
     return test_utils.no_resource_leaks_excluding_node_resources()
 
-
+os.environ['RAY_ADDRESS']
 address = os.environ.get("RAY_ADDRESS", "auto")
 addr = ray.init(address=address)
 
