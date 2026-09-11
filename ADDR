@@ -1,0 +1,2 @@
+export RAY_ADDRESS=$(cat /tmp/ray2nd/gcs_addr)
+echo ${RAY_ADDRESS}
