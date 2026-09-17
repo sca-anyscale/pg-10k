@@ -1,0 +1,12 @@
+#!/bin/bash
+#export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so.2
+#export RAY_JEMALLOC_LIB_PATH=/usr/lib/x86_64-linux-gnu/libjemalloc.so.2
+
+export JEMALLOC_DIR=~/git/jemalloc
+export RAY_JEMALLOC_LIB_PATH=${JEMALLOC_DIR}/lib/libjemalloc.so
+
+export PATH_TO_OUTPUT_DIR=/tmp
+export RAY_JEMALLOC_CONF=prof:true,lg_prof_interval:33,lg_prof_sample:17,prof_final:true,prof_leak:true,prof_prefix:$PATH_TO_OUTPUT_DIR/jeprof.out
+export RAY_JEMALLOC_PROFILE=gcs_server
+
+#CENTRAL-RAY -d -r

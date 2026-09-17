@@ -1,0 +1,7 @@
+#!/bin/bash
+sudo apt update
+sudo apt install -y google-perftools libgoogle-perftools-dev
+
+export PERFTOOLS_LOGFILE=/tmp/pprof.out
+export RAY_GCS_SERVER_PERFTOOLS_PROFILER=1
+export PERFTOOLS_PATH=/usr/lib/x86_64-linux-gnu/libprofiler.so
